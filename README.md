@@ -11,7 +11,6 @@
 
 - Working through the **Boot.dev backend path** (Python → Go) and the AWS path
 - Building out **MERN stack** (MongoDB, Express, React, Node.js) and **Java Spring Boot** skills
-- Running a fully customized **Arch Linux + Hyprland** setup, syncing dotfiles across machines with GNU Stow
 - Second-year coursework: Java OOP, C, Haskell, Computer Organization & Architecture, Signals & Systems, Probability & Statistics
 
 ---
