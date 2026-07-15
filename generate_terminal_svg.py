@@ -30,41 +30,42 @@ GITHUB_USER = "Abdo-N"
 
 def build_lines(stats):
     L = []
-    L.append(("cmd", "~", "neofetch --profile"))
-    L.append(("blank", "", ""))
-    L.append(("title", "", "abdelrahman nader"))
-    L.append(("kv", "Role", "CSEN Student @ GUC"))
-    L.append(("kv", "Edu", "B.Sc. Computer Engineering, German University in Cairo"))
-    L.append(("kv", "Focus", "Full-Stack (MERN) · CLI Tools · Data Analysis"))
-    L.append(("blank", "", ""))
-    L.append(("section", "", "~/stack"))
-    L.append(("kv", "Lang", "Java | Python | C | JavaScript | TypeScript | SQL"))
-    L.append(("kv", "Also", "Haskell"))
-    L.append(("kv", "Web", "React | Express.js | Node.js | MongoDB"))
-    L.append(("kv", "Tools", "Git | Linux | Pandas | NumPy | SQLite | JavaFX | Unity"))
-    L.append(("blank", "", ""))
-    L.append(("section", "", "~/experience"))
-    L.append(("kv", "IEEE", "SE Committee Member, GUC Student Branch (2025-)"))
-    L.append(("kv", "VectorGSC", "Game Dev, Vector Game Studio Club (2024)"))
-    L.append(("blank", "", ""))
-    L.append(("section", "", "~/projects"))
-    L.append(("kv", "DoorDash", "Java/JavaFX board game, MVC, CSV-driven content"))
-    L.append(("kv", "ReservationEngine", "Haskell + Prolog constraint-based scheduler"))
-    L.append(("kv", "CSV-Parser-Analyzer", "Java CLI, sort/filter/stats/export"))
-    L.append(("kv", "Movie_recommender", "Python/Pandas/SQLite CLI, MovieLens data"))
-    L.append(("kv", "MovieRecommender-MERN", "in progress: full MERN rewrite"))
-    L.append(("blank", "", ""))
-    L.append(("section", "", "~/stats"))
-    L.append(("kv", "Repos", str(stats.get("public_repos", "-"))))
-    L.append(("kv", "Followers", str(stats.get("followers", "-"))))
-    L.append(("blank", "", ""))
-    L.append(("section", "", "~/reach"))
-    L.append(("kv", "GitHub", "github.com/Abdo-N"))
-    L.append(("kv", "LinkedIn", "linkedin.com/in/abdelrahman-morad"))
-    L.append(("blank", "", ""))
-    L.append(("cmd", "~", "echo $STATUS"))
-    L.append(("val", "", "open to software engineering / data internships"))
-    L.append(("footer", "", f"last updated {stats.get('updated', '')}"))
+    # --- header (full width) ---
+    L.append(("cmd", "~", "neofetch --profile", 0))
+    L.append(("blank", "", "", 0))
+    L.append(("title", "", "abdelrahman nader", 0))
+    L.append(("kv", "Role", "CSEN Student @ GUC", 0))
+    L.append(("kv", "Edu", "B.Sc. Computer Engineering, GUC", 0))
+    L.append(("kv", "Focus", "Full-Stack (MERN) · CLI Tools · Data Analysis", 0))
+    L.append(("blank", "", "", 0))
+
+    # --- left column ---
+    L.append(("section", "", "~/stack", 1))
+    L.append(("kv", "Lang", "Java · Python · C · JS · TS · SQL", 1))
+    L.append(("kv", "Also", "Haskell", 1))
+    L.append(("kv", "Web", "React · Express · Node.js · MongoDB", 1))
+    L.append(("kv", "Tools", "Git · Linux · Pandas · NumPy · SQLite", 1))
+    L.append(("kv", "", "JavaFX · Unity", 1))
+
+    # --- right column ---
+    L.append(("section", "", "~/experience", 2))
+    L.append(("kv", "IEEE", "SE Committee, GUC Student Branch (2025-)", 2))
+    L.append(("kv", "VectorGSC", "Game Dev, Vector Game Studio Club (2024)", 2))
+    L.append(("section", "", "~/projects", 2))
+    L.append(("kv", "DoorDash", "Java/JavaFX board game, MVC", 2))
+    L.append(("kv", "ReservationEngine", "Haskell + Prolog scheduler", 2))
+    L.append(("kv", "CSV-Parser-Analyzer", "Java CLI, sort/filter/export", 2))
+    L.append(("kv", "Movie_recommender", "Python/Pandas/SQLite CLI", 2))
+    L.append(("kv", "MovieRecommender-MERN", "in progress: MERN rewrite", 2))
+
+    # --- footer (full width) ---
+    L.append(("section", "", "~/reach", 3))
+    L.append(("kv", "GitHub", "github.com/Abdo-N", 3))
+    L.append(("kv", "LinkedIn", "linkedin.com/in/abdelrahman-morad", 3))
+    L.append(("blank", "", "", 3))
+    L.append(("cmd", "~", "echo $STATUS", 3))
+    L.append(("val", "", "open to software engineering / data internships", 3))
+    L.append(("footer", "", f"last updated {stats.get('updated', '')}", 3))
     return L
 
 
@@ -112,13 +113,15 @@ CHAR_W = 8.6          # approx monospace advance width at 14px
 LINE_H = 21
 PAD_X = 20
 PAD_TOP = 46
-MIN_WIDTH = 620
+COL_GAP = 36
 
 def esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
 
 
 def kv_label(label):
+    if not label:
+        return "         "
     return label.ljust(10) if len(label) < 10 else label + " "
 
 
@@ -132,88 +135,107 @@ def line_text(kind, label, value):
 
 def render_svg(lines, theme_name):
     t = THEMES[theme_name]
-    height = PAD_TOP + LINE_H * len(lines) + 24
 
-    # size the canvas to the longest actual line so nothing clips
-    max_chars = max(len(line_text(k, l, v)) for k, l, v in lines)
-    width = max(MIN_WIDTH, PAD_X * 2 + int(max_chars * CHAR_W) + 20)
+    header = [l for l in lines if l[3] == 0]
+    left = [l for l in lines if l[3] == 1]
+    right = [l for l in lines if l[3] == 2]
+    footer = [l for l in lines if l[3] == 3]
 
-    body_lines = []
+    left_w = max(len(line_text(k, lb, v)) for k, lb, v, c in left) * CHAR_W
+    right_w = max(len(line_text(k, lb, v)) for k, lb, v, c in right) * CHAR_W
+    header_w = max(len(line_text(k, lb, v)) for k, lb, v, c in header) * CHAR_W
+    footer_w = max(len(line_text(k, lb, v)) for k, lb, v, c in footer) * CHAR_W
+
+    col_body_w = max(left_w, header_w, footer_w) if False else None
+    width = int(max(header_w, footer_w, left_w + right_w + COL_GAP) + PAD_X * 2 + 20)
+    width = max(width, 780)
+
+    right_x = PAD_X + int(left_w) + COL_GAP
+    col_rows = max(len(left), len(right))
+
+    header_h = len(header) * LINE_H
+    cols_h = col_rows * LINE_H
+    footer_h = len(footer) * LINE_H
+    height = PAD_TOP + header_h + cols_h + footer_h + 30
+
+    body = []
     delay = 0.0
-    last_end_x = PAD_X
-    last_y = PAD_TOP
+    last_end_x, last_y = PAD_X, PAD_TOP
 
-    style_rules = []
-    for i, (kind, label, value) in enumerate(lines):
-        y = PAD_TOP + i * LINE_H
+    def emit(kind, label, value, x, y):
+        nonlocal delay, last_end_x, last_y
         if kind == "blank":
-            continue
-
+            return
         text = line_text(kind, label, value)
-        if kind == "cmd":
-            color = t["cmd"]
-        elif kind == "title":
-            color = t["title"]
-        elif kind == "section":
-            color = t["accent"]
-        elif kind == "kv":
-            color = t["val"]
-        elif kind == "val":
-            color = t["key"]
-        elif kind == "footer":
-            color = t["dim"]
-        else:
-            color = t["val"]
+        color = {
+            "cmd": t["cmd"], "title": t["title"], "section": t["accent"],
+            "kv": t["val"], "val": t["key"], "footer": t["dim"],
+        }.get(kind, t["val"])
 
         nchars = max(len(text), 1)
-        dur = max(nchars * 0.028, 0.12)
-        cls = f"tl{i}"
-        # steps() reveal via clip-path width animation, discrete per character
-        style_rules.append(
-            f".{cls}{{clip-path:inset(0 100% 0 0);"
-            f"animation:reveal{i} {dur:.2f}s steps({nchars},end) forwards;"
-            f"animation-delay:{delay:.2f}s;}}"
+        dur = max(nchars * 0.013, 0.06)
+        # SMIL opacity fade-in per line: this is well supported when the SVG
+        # is embedded via <img>, and unlike a clip-path character reveal it
+        # can never freeze on a half-typed word if paused mid-animation.
+        anim = (
+            f'<animate attributeName="opacity" from="0" to="1" '
+            f'begin="{delay:.2f}s" dur="0.1s" fill="freeze"/>'
         )
-        style_rules.append(f"@keyframes reveal{i}{{to{{clip-path:inset(0 0 0 0);}}}}")
 
         if kind == "kv":
             key_part = esc(kv_label(label))
             val_part = esc(value)
             span = (
-                f'<text x="{PAD_X}" y="{y}" font-family="{FONT}" font-size="14">'
+                f'<text x="{x}" y="{y}" font-family="{FONT}" font-size="14">'
                 f'<tspan fill="{t["key"]}">{key_part}</tspan>'
                 f'<tspan fill="{t["val"]}">{val_part}</tspan></text>'
             )
         else:
             span = (
-                f'<text x="{PAD_X}" y="{y}" font-family="{FONT}" font-size="14" '
+                f'<text x="{x}" y="{y}" font-family="{FONT}" font-size="14" '
                 f'fill="{color}">{esc(text)}</text>'
             )
-
-        body_lines.append(f'<g class="{cls}">{span}</g>')
-        # sequential typing: each line starts once the previous one finishes
+        body.append(f'<g opacity="0">{span}{anim}</g>')
         delay += dur
-        last_end_x = PAD_X + nchars * CHAR_W
+        last_end_x = x + nchars * CHAR_W
         last_y = y
+
+    y = PAD_TOP
+    for kind, label, value, col in header:
+        emit(kind, label, value, PAD_X, y)
+        y += LINE_H
+    header_bottom = y
+
+    ly = header_bottom
+    for kind, label, value, col in left:
+        emit(kind, label, value, PAD_X, ly)
+        ly += LINE_H
+
+    ry = header_bottom
+    for kind, label, value, col in right:
+        emit(kind, label, value, right_x, ry)
+        ry += LINE_H
+
+    fy = header_bottom + col_rows * LINE_H
+    for kind, label, value, col in footer:
+        emit(kind, label, value, PAD_X, fy)
+        fy += LINE_H
 
     cursor_delay = delay
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
-<style>
-text{{font-family:{FONT};}}
-.cursor{{fill:{t["val"]};opacity:0;animation:blink 1s steps(1) {cursor_delay:.2f}s infinite;}}
-@keyframes blink{{0%,49%{{opacity:1;}}50%,100%{{opacity:0;}}}}
-{''.join(style_rules)}
-</style>
+<style>text{{font-family:{FONT};}}</style>
 <rect x="0" y="0" width="{width}" height="{height}" rx="10" fill="{t["bg"]}" stroke="{t["border"]}"/>
 <rect x="0" y="0" width="{width}" height="30" rx="10" fill="{t["chrome"]}"/>
 <rect x="0" y="20" width="{width}" height="10" fill="{t["chrome"]}"/>
 <circle cx="20" cy="15" r="6" fill="{t["dot1"]}"/>
 <circle cx="40" cy="15" r="6" fill="{t["dot2"]}"/>
 <circle cx="60" cy="15" r="6" fill="{t["dot3"]}"/>
-<text x="{width/2}" y="19" font-family="{FONT}" font-size="12" fill="{t["dim"]}" text-anchor="middle">abdo@guc: ~</text>
-{''.join(body_lines)}
-<rect class="cursor" x="{last_end_x + 2:.1f}" y="{last_y - 11}" width="8" height="14"/>
+<text x="{width/2}" y="19" font-family="{FONT}" font-size="12" fill="{t["dim"]}" text-anchor="middle">Abdo-N</text>
+{''.join(body)}
+<rect x="{last_end_x + 2:.1f}" y="{last_y - 11}" width="8" height="14" fill="{t["val"]}" opacity="0">
+<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.001;0.001;0.5;0.5;1" dur="1s" begin="{cursor_delay:.2f}s" repeatCount="indefinite"/>
+</rect>
 </svg>'''
     return svg
 
@@ -225,7 +247,7 @@ def main():
     args = ap.parse_args()
 
     stats = fetch_live_stats() if args.live else {"public_repos": "-", "followers": "-"}
-    stats["updated"] = datetime.now(timezone.utc).strftime("%d %b %Y, %H:%M UTC")
+    stats["updated"] = datetime.now(timezone.utc).strftime("%d %b %Y")
 
     lines = build_lines(stats)
     os.makedirs(args.outdir, exist_ok=True)
