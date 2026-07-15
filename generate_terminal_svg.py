@@ -39,7 +39,7 @@ def build_lines(stats):
     L.append(("blank", "", ""))
     L.append(("section", "", "~/stack"))
     L.append(("kv", "Lang", "Java | Python | C | JavaScript | TypeScript | SQL"))
-    L.append(("kv", "Also", "Haskell | Prolog"))
+    L.append(("kv", "Also", "Haskell"))
     L.append(("kv", "Web", "React | Express.js | Node.js | MongoDB"))
     L.append(("kv", "Tools", "Git | Linux | Pandas | NumPy | SQLite | JavaFX | Unity"))
     L.append(("blank", "", ""))
@@ -108,23 +108,40 @@ THEMES = {
 }
 
 FONT = "SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace"
-CHAR_W = 8.4          # approx monospace advance width at 14px
+CHAR_W = 8.6          # approx monospace advance width at 14px
 LINE_H = 21
 PAD_X = 20
 PAD_TOP = 46
-WIDTH = 720
+MIN_WIDTH = 620
 
 def esc(s):
     return (s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+
+
+def kv_label(label):
+    return label.ljust(10) if len(label) < 10 else label + " "
+
+
+def line_text(kind, label, value):
+    if kind == "cmd":
+        return f"{label} $ {value}"
+    if kind == "kv":
+        return f"{kv_label(label)}{value}"
+    return value
 
 
 def render_svg(lines, theme_name):
     t = THEMES[theme_name]
     height = PAD_TOP + LINE_H * len(lines) + 24
 
+    # size the canvas to the longest actual line so nothing clips
+    max_chars = max(len(line_text(k, l, v)) for k, l, v in lines)
+    width = max(MIN_WIDTH, PAD_X * 2 + int(max_chars * CHAR_W) + 20)
+
     body_lines = []
     delay = 0.0
-    total_chars = 0
+    last_end_x = PAD_X
+    last_y = PAD_TOP
 
     style_rules = []
     for i, (kind, label, value) in enumerate(lines):
@@ -132,26 +149,20 @@ def render_svg(lines, theme_name):
         if kind == "blank":
             continue
 
+        text = line_text(kind, label, value)
         if kind == "cmd":
-            text = f"{label} $ {value}"
             color = t["cmd"]
         elif kind == "title":
-            text = value
             color = t["title"]
         elif kind == "section":
-            text = value
             color = t["accent"]
         elif kind == "kv":
-            text = f"{label:<10}{value}"
             color = t["val"]
         elif kind == "val":
-            text = value
             color = t["key"]
         elif kind == "footer":
-            text = value
             color = t["dim"]
         else:
-            text = value
             color = t["val"]
 
         nchars = max(len(text), 1)
@@ -166,7 +177,7 @@ def render_svg(lines, theme_name):
         style_rules.append(f"@keyframes reveal{i}{{to{{clip-path:inset(0 0 0 0);}}}}")
 
         if kind == "kv":
-            key_part = esc(label.ljust(10))
+            key_part = esc(kv_label(label))
             val_part = esc(value)
             span = (
                 f'<text x="{PAD_X}" y="{y}" font-family="{FONT}" font-size="14">'
@@ -180,27 +191,29 @@ def render_svg(lines, theme_name):
             )
 
         body_lines.append(f'<g class="{cls}">{span}</g>')
-        delay += dur * 0.55
-        total_chars += nchars
+        # sequential typing: each line starts once the previous one finishes
+        delay += dur
+        last_end_x = PAD_X + nchars * CHAR_W
+        last_y = y
 
-    cursor_delay = delay + 0.1
+    cursor_delay = delay
 
-    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}" height="{height}" viewBox="0 0 {WIDTH} {height}">
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">
 <style>
 text{{font-family:{FONT};}}
 .cursor{{fill:{t["val"]};opacity:0;animation:blink 1s steps(1) {cursor_delay:.2f}s infinite;}}
 @keyframes blink{{0%,49%{{opacity:1;}}50%,100%{{opacity:0;}}}}
 {''.join(style_rules)}
 </style>
-<rect x="0" y="0" width="{WIDTH}" height="{height}" rx="10" fill="{t["bg"]}" stroke="{t["border"]}"/>
-<rect x="0" y="0" width="{WIDTH}" height="30" rx="10" fill="{t["chrome"]}"/>
-<rect x="0" y="20" width="{WIDTH}" height="10" fill="{t["chrome"]}"/>
+<rect x="0" y="0" width="{width}" height="{height}" rx="10" fill="{t["bg"]}" stroke="{t["border"]}"/>
+<rect x="0" y="0" width="{width}" height="30" rx="10" fill="{t["chrome"]}"/>
+<rect x="0" y="20" width="{width}" height="10" fill="{t["chrome"]}"/>
 <circle cx="20" cy="15" r="6" fill="{t["dot1"]}"/>
 <circle cx="40" cy="15" r="6" fill="{t["dot2"]}"/>
 <circle cx="60" cy="15" r="6" fill="{t["dot3"]}"/>
-<text x="{WIDTH/2}" y="19" font-family="{FONT}" font-size="12" fill="{t["dim"]}" text-anchor="middle">abdo@guc: ~</text>
+<text x="{width/2}" y="19" font-family="{FONT}" font-size="12" fill="{t["dim"]}" text-anchor="middle">abdo@guc: ~</text>
 {''.join(body_lines)}
-<rect class="cursor" x="{PAD_X}" y="{PAD_TOP + (len([l for l in lines if l[0]!='blank'])-1)*LINE_H - 11}" width="8" height="14"/>
+<rect class="cursor" x="{last_end_x + 2:.1f}" y="{last_y - 11}" width="8" height="14"/>
 </svg>'''
     return svg
 
