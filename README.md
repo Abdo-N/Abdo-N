@@ -1,24 +1,47 @@
-<div align="center">
-
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/terminal-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="assets/terminal-light.svg">
-  <img alt="Abdo's terminal profile" src="assets/terminal-dark.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/blueprint-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="assets/blueprint-light.svg">
+  <img alt="Abdelrahman Nader — Computer Engineer, GUC" src="assets/blueprint-dark.svg" width="100%">
 </picture>
 
-<br/>
+```text
+BILL OF MATERIALS                                              SHEET 1/4
+──────────────────────────────────────────────────────────────────────
+ NO.  CATEGORY         SPEC
+ 01   LANGUAGES        Java · Python · C · JavaScript · TypeScript
+                        SQL · Haskell
+ 02   WEB / SERVICES   React · Express · Node.js · MongoDB
+ 03   TOOLING          Git · Linux · Pandas · NumPy · SQLite
+ 04   OTHER            JavaFX · Unity
+──────────────────────────────────────────────────────────────────────
+```
 
-<img src="https://skillicons.dev/icons?i=java,python,c,js,ts,mysql,react,nodejs,express,mongodb,git,linux,haskell,unity&theme=dark" alt="tech stack" />
+```text
+PROJECT INDEX                                                  SHEET 2/4
+──────────────────────────────────────────────────────────────────────
+ DoorDash               Java / JavaFX board game — MVC architecture
+ ReservationEngine      Haskell + Prolog scheduling engine
+ CSV-Parser-Analyzer    Java CLI — sort, filter, export
+ Movie_recommender      Python / Pandas / SQLite recommender CLI
+ MovieRecommender-MERN  MERN rewrite of the above          [in progress]
+──────────────────────────────────────────────────────────────────────
+```
 
-<br/><br/>
+```text
+REVISION HISTORY                                               SHEET 3/4
+──────────────────────────────────────────────────────────────────────
+ 2025 —      IEEE, SE Committee — GUC Student Branch
+ 2024        VectorGSC, Game Dev — Vector Game Studio Club
+──────────────────────────────────────────────────────────────────────
+```
 
-<img src="https://github-readme-stats.vercel.app/api?username=Abdo-N&show_icons=true&hide_border=false&border_color=30363d&bg_color=0d1117&title_color=58a6ff&icon_color=3fb950&text_color=c9d1d9&border_radius=10" height="165" alt="Abdo's GitHub stats" />
-<img src="https://streak-stats.demolab.com?user=Abdo-N&hide_border=false&border=30363d&background=0D1117&ring=58A6FF&fire=3FB950&currStreakLabel=58A6FF&sideLabels=8B949E&currStreakNum=C9D1D9&sideNums=C9D1D9&dates=8B949E&border_radius=10" height="165" alt="Abdo's GitHub streak" />
-
-<br/><br/>
-
-[![GitHub](https://img.shields.io/badge/GitHub-Abdo--N-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Abdo-N)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Abdelrahman%20Nader-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/abdelrahman-morad)
-[![Status](https://img.shields.io/badge/status-open%20to%20internships-3fb950?style=for-the-badge&logo=googlejobs&logoColor=white)](https://github.com/Abdo-N)
-
-</div>
+```text
+TITLE BLOCK                                                    SHEET 4/4
+──────────────────────────────────────────────────────────────────────
+ NAME         Abdelrahman Nader
+ DISCIPLINE   Computer Engineering, GUC
+ GITHUB       github.com/Abdo-N
+ LINKEDIN     linkedin.com/in/abdelrahman-morad
+ STATUS       OPEN TO SOFTWARE ENGINEERING / DATA INTERNSHIPS
+──────────────────────────────────────────────────────────────────────
+```
