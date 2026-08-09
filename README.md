@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/profile-banner.svg" alt="Abdelrahman Nader — Computer Engineer and Software Developer" width="100%" />
+
 # Hey, I'm Abdelrahman Nader 👋
 
 ### Computer Engineering student · Full-stack developer · Problem solver

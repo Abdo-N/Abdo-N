@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="280" viewBox="0 0 1000 280" role="img" aria-labelledby="title description">
+  <title id="title">Abdelrahman Nader — developer banner</title>
+  <desc id="description">An animated terminal-inspired banner with glowing circuit paths.</desc>
+
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1020"/>
+      <stop offset="0.52" stop-color="#111936"/>
+      <stop offset="1" stop-color="#17102e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="0.5" stop-color="#818cf8"/>
+      <stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#818cf8" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#818cf8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#94a3b8" stroke-opacity=".06"/>
+    </pattern>
+    <clipPath id="terminal-clip"><rect x="82" y="184" width="590" height="28"/></clipPath>
+  </defs>
+
+  <style>
+    .circuit { stroke-dasharray: 8 13; animation: flow 8s linear infinite; }
+    .circuit.slow { animation-duration: 12s; animation-direction: reverse; }
+    .node { animation: pulse 2.8s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    .node.delay { animation-delay: -1.4s; }
+    .cursor { animation: blink 1s steps(2, jump-none) infinite; }
+    .orb { animation: drift 7s ease-in-out infinite alternate; }
+    .typed { animation: reveal 4s steps(42, end) both; }
+    @keyframes flow { to { stroke-dashoffset: -210; } }
+    @keyframes pulse { 50% { opacity: .35; transform: scale(.72); } }
+    @keyframes blink { 50% { opacity: 0; } }
+    @keyframes drift { to { transform: translate(26px, -12px); } }
+    @keyframes reveal { from { transform: translateX(-590px); } to { transform: translateX(0); } }
+  </style>
+
+  <rect width="1000" height="280" rx="22" fill="url(#background)"/>
+  <rect width="1000" height="280" rx="22" fill="url(#grid)"/>
+  <circle class="orb" cx="845" cy="92" r="190" fill="url(#glow)"/>
+
+  <g fill="none" stroke="url(#accent)" stroke-width="1.5" opacity=".6">
+    <path class="circuit" d="M0 54H158l34 34h92"/>
+    <path class="circuit slow" d="M1000 61H842l-42 42H676"/>
+    <path class="circuit" d="M1000 225H886l-31-31H740"/>
+    <path class="circuit slow" d="M0 239h116l28-28h90"/>
+  </g>
+
+  <g fill="#818cf8" filter="url(#soft-glow)">
+    <circle class="node" cx="285" cy="88" r="4"/>
+    <circle class="node delay" cx="675" cy="103" r="4"/>
+    <circle class="node" cx="740" cy="194" r="4"/>
+    <circle class="node delay" cx="235" cy="211" r="4"/>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+    <text x="72" y="112" fill="#f8fafc" font-size="42" font-weight="700" letter-spacing="-.8">Abdelrahman Nader</text>
+    <rect x="72" y="132" width="475" height="3" rx="1.5" fill="url(#accent)"/>
+    <text x="74" y="165" fill="#94a3b8" font-size="17" letter-spacing="2">COMPUTER ENGINEER  •  SOFTWARE DEVELOPER</text>
+
+    <g clip-path="url(#terminal-clip)">
+      <g class="typed">
+        <text x="74" y="207" fill="#38bdf8" font-size="18">❯</text>
+        <text x="102" y="207" fill="#cbd5e1" font-size="18">building thoughtful software...</text>
+        <rect class="cursor" x="453" y="188" width="10" height="22" rx="1" fill="#c084fc"/>
+      </g>
+    </g>
+  </g>
+
+  <g transform="translate(824 118)" fill="none" stroke="url(#accent)" stroke-linecap="round" stroke-linejoin="round" filter="url(#soft-glow)">
+    <path d="M-41-22-68 0l27 22M41-22 68 0 41 22" stroke-width="7"/>
+    <path d="m17-48-34 96" stroke-width="7"/>
+  </g>
+
+  <rect x=".75" y=".75" width="998.5" height="278.5" rx="21.25" fill="none" stroke="url(#accent)" stroke-opacity=".38" stroke-width="1.5"/>
+</svg>
