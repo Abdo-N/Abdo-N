@@ -57,6 +57,19 @@ const abdelrahman = {
 
 </div>
 
+### Industrial work
+
+> #### 🏭 EGAS Employee Clearance System
+> A bilingual, Arabic-first platform that digitizes the employee clearance
+> workflow across 13 departments—from request creation and evidence-backed
+> signatures to final IT access revocation and generation of the official
+> clearance PDF.
+
+| Variant | Highlights | Stack |
+| :--- | :--- | :--- |
+| [Active Directory edition](https://github.com/Abdo-N/Egas-clearance-AD) | Role-based dashboards, tiered departmental approvals, IT access-revocation workflow, analytics, and audit-ready evidence | React, Node.js, Express, MongoDB |
+| [Standalone edition](https://github.com/Abdo-N/Egas-clearance-standalone) | Self-contained deployment with Arabic/English UI, dark mode, secure re-authentication, document uploads, and generated clearance PDFs | React, Node.js, Express, MongoDB |
+
 ### Selected projects
 
 | Project | What it does | Built with |
@@ -65,7 +78,7 @@ const abdelrahman = {
 | [ReservationEngine](https://github.com/Abdo-N/ReservationEngine) | A declarative scheduling and reservation engine | Haskell, Prolog |
 | [CSV Parser & Analyzer](https://github.com/Abdo-N/CSV-Parser-Analyzer) | A CLI for sorting, filtering, analyzing, and exporting CSV data | Java |
 | [Movie Recommender](https://github.com/Abdo-N/Movie_recommender) | A command-line movie recommendation system | Python, Pandas, SQLite |
-| [Movie Recommender — MERN](https://github.com/Abdo-N/MovieRecommender-MERN) | A full-stack reimagining of the movie recommender | MongoDB, Express, React, Node.js |
+| [Movie Recommender — MERN](https://github.com/Abdo-N/Movie_Recommender--MERN-) | A full-stack reimagining of the movie recommender | MongoDB, Express, React, Node.js |
 
 ---
 
