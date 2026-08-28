@@ -74,11 +74,11 @@ const abdelrahman = {
 
 | Project | What it does | Built with |
 | :--- | :--- | :--- |
+| [Habit Tracker](https://github.com/Abdo-N/Habit-Tracker) | A full-stack habit tracker with a GitHub-style contribution heatmap, streak tracking, and per-habit toggle/edit/delete | MongoDB, Express, React, Node.js |
 | [DoorDash](https://github.com/Abdo-N/DoorDash) | A board game designed around a clean MVC architecture | Java, JavaFX |
 | [ReservationEngine](https://github.com/Abdo-N/ReservationEngine) | A declarative scheduling and reservation engine | Haskell, Prolog |
 | [CSV Parser & Analyzer](https://github.com/Abdo-N/CSV-Parser-Analyzer) | A CLI for sorting, filtering, analyzing, and exporting CSV data | Java |
 | [Movie Recommender](https://github.com/Abdo-N/Movie_recommender) | A command-line movie recommendation system | Python, Pandas, SQLite |
-| [Movie Recommender — MERN](https://github.com/Abdo-N/Movie_Recommender--MERN-) | A full-stack reimagining of the movie recommender | MongoDB, Express, React, Node.js |
 
 ---
 
